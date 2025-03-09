@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>li1023</title>
+    <link rel="stylesheet" href="styles.css?v=<?php echo getResourceVersion(); ?>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/harmonyos-sans/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/harmonyos-sans@1.0.1/index.min.css">
+    <!-- 或者尝试这个 CDN -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/iuxt/src/harmony/harmony.css"> -->
+    <meta name="description" content="li1023 - 优雅简约的多域名品牌组合">
+    <meta name="keywords" content="li1023, 域名品牌, 多域名组合, .com, .cn, .xyz, .top, .online">
+    <meta property="og:title" content="li1023">
+    <meta property="og:description" content="优雅简约的多域名品牌组合">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://li1023.com">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="li1023">
+    <meta name="twitter:description" content="优雅简约的多域名品牌组合">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23006eff'/%3E%3Ctext x='50%25' y='50%25' font-family='Space Grotesk, Arial' font-size='20' font-weight='600' fill='white' text-anchor='middle' dominant-baseline='middle'%3EL%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+    <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23006eff'/%3E%3Ctext x='50%25' y='50%25' font-family='Space Grotesk, Arial' font-size='20' font-weight='600' fill='white' text-anchor='middle' dominant-baseline='middle'%3EL%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='60' fill='%23006eff'/%3E%3Ctext x='50%25' y='50%25' font-family='Space Grotesk, Arial' font-size='100' font-weight='600' fill='white' text-anchor='middle' dominant-baseline='middle'%3EL%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+    <div class="loader">
+        <span class="loader-dot"></span>
+        <span class="loader-dot"></span>
+        <span class="loader-dot"></span>
+    </div>
+    <canvas id="particles-bg"></canvas>
+    
+    <!-- 添加主题变更通知 -->
+    <div id="theme-notification" class="theme-notification">
+        <div class="notification-content">
+            <span id="theme-notification-text">已切换到浅色模式</span>
+        </div>
+    </div>
+    
+    <div class="minimal-nav">
+        <a href="#" class="nav-link" id="about-link" aria-label="关于">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+        </a>
+        <a href="#" class="nav-link" id="contact-link" aria-label="联系">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+        </a>
+        <button id="fullscreen-btn" aria-label="切换全屏模式" class="nav-link">
+            <svg class="fullscreen-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3"></path>
+                <path d="M21 8V5a2 2 0 0 0-2-2h-3"></path>
+                <path d="M3 16v3a2 2 0 0 0 2 2h3"></path>
+                <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
+            </svg>
+            <svg class="exit-fullscreen-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                <path d="M8 3v3a2 2 0 0 1-2 2H3"></path>
+                <path d="M21 8h-3a2 2 0 0 1-2-2V3"></path>
+                <path d="M3 16h3a2 2 0 0 1 2 2v3"></path>
+                <path d="M16 21v-3a2 2 0 0 1 2-2h3"></path>
+            </svg>
+        </button>
+        <button id="theme-toggle-btn" aria-label="切换颜色模式" class="theme-btn">
+            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </button>
+    </div>
+    
+    <div class="wrapper">
+        <div class="content">
+            <div class="domain-name">
+                <span class="part first">li</span>
+                <span class="part number">
+                    <span class="digit">1</span>
+                    <span class="digit">0</span>
+                    <span class="digit">2</span>
+                    <span class="digit">3</span>
+                </span>
+            </div>
+            <div class="domain-extensions">
+                <a href="https://li1023.com" class="extension active">.com</a>
+                <a href="https://li1023.cn" class="extension">.cn</a>
+                <a href="https://li1023.xyz" class="extension">.xyz</a>
+                <a href="https://li1023.top" class="extension">.top</a>
+                <a href="https://li1023.online" class="extension">.online</a>
+            </div>
+            <div class="tagline">
+                <span class="tagline-text">多域名组合&nbsp;·&nbsp;优雅品牌</span>
+            </div>
+        </div>
+    </div>
+    <script src="script.js?v=<?php echo getResourceVersion(); ?>" defer></script>
+    
+    <!-- 在body结束前添加关于弹窗 -->
+    <div class="modal" id="about-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>关于 li1023</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>li1023 是一个极具现代感的域名品牌，由"li"和"1023"巧妙组合而成。</p>
+                <p>品牌特点：</p>
+                <ul>
+                    <li><strong>简约优雅</strong> - 简短易记的字母数字组合</li>
+                    <li><strong>多域名矩阵</strong> - 完整掌控五大主流顶级域名：
+                        <div class="domain-features">
+                            <span class="domain-tag" data-ext="com">.com</span> - 最具商业价值
+                            <span class="domain-tag" data-ext="cn">.cn</span> - 中国区标识
+                            <span class="domain-tag" data-ext="xyz">.xyz</span> - 新兴创意
+                            <span class="domain-tag" data-ext="top">.top</span> - 高端定位
+                            <span class="domain-tag" data-ext="online">.online</span> - 在线业务
+                        </div>
+                    </li>
+                    <li><strong>品牌价值</strong> - 适合企业品牌、个人网站、创新项目</li>
+                    <li><strong>未来潜力</strong> - 数字化时代的优质品牌资产</li>
+                </ul>
+                <p>作为一个全方位的域名品牌组合，li1023为品牌建设提供无限可能。</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 更新联系方式弹窗 -->
+    <div class="modal" id="contact-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>联系与咨询</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="contact-grid">
+                    <!-- 邮箱 -->
+                    <a href="mailto:li@li1023.xyz" class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <span>li@li1023.xyz</span>
+                    </a>
+                    <!-- GitHub -->
+                    <a href="https://github.com/li1023qwq" target="_blank" rel="noopener noreferrer" class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        <span>li1023</span>
+                    </a>
+                    <!-- 微博 -->
+                    <a href="https://weibo.com/u/7849892498" target="_blank" rel="noopener noreferrer" class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1024 1024" fill="currentColor">
+                            <path d="M457.3 543c-68.1-17.7-145 16.2-174.6 76.2-30.1 61.2-1 129.1 67.8 151.3 71.2 23 155.2-12.2 184.4-78.3 28.7-64.6-7.2-131-77.6-149.2zm-52 156.2c-13.8 22.1-43.5 31.7-65.8 21.6-22-10-28.5-35.7-14.6-57.2 13.7-21.4 42.3-31 64.4-21.7 22.4 9.5 29.6 35 16 57.3zm45.5-58.5c-5 8.6-16.1 12.7-24.7 9.1-8.5-3.5-11.2-13.1-6.4-21.5 5-8.4 15.6-12.4 24.1-9.1 8.7 3.2 11.8 12.9 7 21.5zm334.5-197.2c15 4.8 31-3.4 35.9-18.3 11.8-36.6 4.4-78.4-23.2-109-27.6-30.6-68.4-42.3-106-34.3-15.4 3.3-25.2 18.4-21.9 33.8 3.3 15.3 18.4 25.2 33.8 21.8 18.4-3.9 38.3 1.8 51.9 16.7 13.5 15 17.2 35.4 11.3 53.3-4.9 15.1 3.2 31.1 18.2 36z"/>
+                            <path d="M885.1 237.5c-56.7-62.9-140.4-86.9-217.7-70.5-17.9 3.8-29.3 21.4-25.4 39.3 3.8 17.9 21.4 29.3 39.3 25.5 55-11.7 114.4 5.4 154.8 50.1 40.3 44.7 51.2 105.7 34 159.1-5.6 17.4 3.9 36 21.3 41.7 17.4 5.6 36-3.9 41.6-21.2v-.1c24.1-75.4 8.9-161.1-47.9-223.9zM729 499c-12.2-3.6-20.5-6.1-14.1-22.1 13.8-34.7 15.2-64.7.3-86-28-40.1-104.8-37.9-192.8-1.1 0 0-27.6 12.1-20.6-9.8 13.5-43.5 11.5-79.9-9.6-101-47.7-47.8-174.6 1.8-283.5 110.6C127.3 471.1 80 557.5 80 632.2 80 775.1 263.2 862 442.5 862c235 0 391.3-136.5 391.3-245 0-65.5-55.2-102.6-104.8-118zM443 810.8c-143 14.1-266.5-50.5-275.8-144.5-9.3-93.9 99.2-181.5 242.2-195.6 143-14.2 266.5 50.5 275.8 144.4C694.4 709 586 796.6 443 810.8z"/>
+                        </svg>
+                        <span>li1023</span>
+                    </a>
+                    <!-- 博客网址 -->
+                    <a href="https://wp.li1023.com" target="_blank" rel="noopener noreferrer" class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"></path>
+                        </svg>
+                        <span>晚夜深秋</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 添加网站标题动态效果 -->
+    <script>
+        // 设置网页标题动态效果
+        let originalTitle = document.title;
+        let titleTimeout;
+        
+        window.addEventListener('blur', () => {
+            clearTimeout(titleTimeout);
+            document.title = "记得回来看看 | " + originalTitle;
+        });
+        
+        window.addEventListener('focus', () => {
+            clearTimeout(titleTimeout);
+            document.title = originalTitle;
+            
+            // 添加欢迎回来的效果
+            titleTimeout = setTimeout(() => {
+                document.title = "欢迎回来 | " + originalTitle;
+                setTimeout(() => {
+                    document.title = originalTitle;
+                }, 2000);
+            }, 500);
+        });
+    </script>
+</body>
+</html> 
