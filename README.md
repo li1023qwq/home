@@ -18,8 +18,8 @@
 - 多场景的应用潜力
 
 ## 预览
-<img width="1716" alt="light-mode" src="path-to-light-mode-screenshot" />
-<img width="1716" alt="dark-mode" src="path-to-dark-mode-screenshot" />
+<img width="1716" alt="light-mode" src="screenshots/li1023-light-2025-03-09T06-10-06.png" />
+<img width="1716" alt="dark-mode" src="screenshots/li1023-dark-2025-03-09T06-10-28.png" />
 
 ## 适用场景
 

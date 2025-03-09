@@ -4,7 +4,9 @@
     --secondary-text: #666666;
     --copyright-color: #999999;
     --gradient-start: #006fff;
+    --gradient-start-rgb: 0, 111, 255;
     --gradient-end: #0052cc;
+    --gradient-end-rgb: 0, 82, 204;
     --particle-color: rgba(0, 0, 0, 0.1);
     --font-family: 'HarmonyOS Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
@@ -15,7 +17,9 @@
     --secondary-text: #cccccc;
     --copyright-color: #888888;
     --gradient-start: #006fff;
+    --gradient-start-rgb: 0, 111, 255;
     --gradient-end: #0052cc;
+    --gradient-end-rgb: 0, 82, 204;
     --particle-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -1627,6 +1631,224 @@ body {
 /* 确保深色模式下的数字效果 */
 [data-theme="dark"] .digit {
     text-shadow: 0 0 10px rgba(0, 110, 255, 0.5);
+}
+
+/* 预览图片样式 */
+.preview-images {
+    margin-top: 30px;
+}
+
+.preview-images h3 {
+    margin-bottom: 15px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.preview-image {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.preview-image:hover {
+    transform: scale(1.02);
+}
+
+[data-theme="dark"] .preview-image {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* 优化截图效果 */
+.screenshot-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, white, rgba(255, 255, 255, 0.8));
+    opacity: 0;
+    z-index: 9999;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+[data-theme="dark"] .screenshot-flash {
+    background: radial-gradient(circle at center, white, rgba(255, 255, 255, 0.6));
+}
+
+/* 改进截图预览模态框 */
+.screenshot-preview-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.screenshot-preview-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.screenshot-preview-content {
+    background-color: var(--bg-color);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(var(--gradient-start-rgb), 0.1);
+    overflow: hidden;
+    width: 90%;
+    max-width: 1200px;
+    border-radius: 16px;
+    transform: scale(0.9);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.screenshot-preview-modal.active .screenshot-preview-content {
+    transform: scale(1);
+}
+
+.screenshot-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+}
+
+.screenshot-preview-header h3 {
+    margin: 0;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.close-preview {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text-color);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.close-preview:hover {
+    opacity: 1;
+}
+
+.screenshot-preview-body {
+    padding: 20px;
+    max-height: 75vh;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, 
+        rgba(var(--gradient-start-rgb), 0.05), 
+        rgba(var(--gradient-end-rgb), 0.01));
+}
+
+.screenshot-preview-image {
+    max-width: 100%;
+    max-height: 70vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    object-fit: contain;
+    border: 1px solid rgba(var(--gradient-start-rgb), 0.1);
+}
+
+.screenshot-preview-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 15px 20px;
+    border-top: 1px solid rgba(128, 128, 128, 0.1);
+}
+
+.screenshot-preview-footer button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.download-screenshot {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: white;
+    border: none;
+}
+
+.download-screenshot:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(var(--gradient-start-rgb), 0.3);
+}
+
+.share-screenshot {
+    background-color: rgba(var(--gradient-start-rgb), 0.1);
+    color: var(--gradient-start);
+    border: 1px solid rgba(var(--gradient-start-rgb), 0.2);
+}
+
+.share-screenshot:hover {
+    background-color: rgba(var(--gradient-start-rgb), 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(var(--gradient-start-rgb), 0.1);
+}
+
+.cancel-screenshot {
+    background-color: rgba(128, 128, 128, 0.1);
+    color: var(--text-color);
+    border: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.cancel-screenshot:hover {
+    background-color: rgba(128, 128, 128, 0.15);
+    transform: translateY(-2px);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .screenshot-preview-footer {
+        flex-direction: column;
+    }
+    
+    .screenshot-preview-footer button {
+        width: 100%;
+    }
+}
+
+/* 深色模式下的预览优化 */
+[data-theme="dark"] .screenshot-preview-content {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .screenshot-preview-image {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* 确保截图中的渐变文本正确显示 */
+.screenshot-preview-image .domain-name .part.first,
+.screenshot-preview-image .domain-name .part.number,
+.screenshot-preview-image .digit {
+    background: inherit;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 

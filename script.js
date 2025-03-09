@@ -879,4 +879,290 @@ document.addEventListener('DOMContentLoaded', function() {
         e.target.style.setProperty('--x', `${x}%`);
         e.target.style.setProperty('--y', `${y}%`);
     });
+
+    // 优化截图功能
+    document.getElementById('screenshot-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // 显示截图中提示
+        const notification = document.getElementById('theme-notification');
+        const notificationText = document.getElementById('theme-notification-text');
+        notificationText.textContent = '准备截图...';
+        notification.style.display = 'block';
+        
+        // 添加截图倒计时效果
+        let countdown = 3;
+        const countdownInterval = setInterval(() => {
+            notificationText.textContent = `截图倒计时 ${countdown}...`;
+            countdown--;
+            
+            if (countdown < 0) {
+                clearInterval(countdownInterval);
+                notificationText.textContent = '正在生成截图...';
+                
+                // 添加截图前的视觉效果
+                const flashEffect = document.createElement('div');
+                flashEffect.className = 'screenshot-flash';
+                document.body.appendChild(flashEffect);
+                
+                // 闪光效果
+                setTimeout(() => {
+                    flashEffect.style.opacity = '0.7';
+                    
+                    setTimeout(() => {
+                        // 移除闪光效果
+                        flashEffect.style.opacity = '0';
+                        
+                        // 隐藏模态框和通知
+                        const modals = document.querySelectorAll('.modal');
+                        modals.forEach(modal => {
+                            if (modal.style.display === 'block') {
+                                modal.dataset.wasVisible = 'true';
+                                modal.style.display = 'none';
+                            }
+                        });
+                        
+                        // 临时隐藏导航栏和通知
+                        const nav = document.querySelector('.minimal-nav');
+                        const navDisplay = nav.style.display;
+                        nav.style.display = 'none';
+                        notification.style.display = 'none';
+                        
+                        // 使用html2canvas库生成高质量截图
+                        html2canvas(document.body, {
+                            scale: 2, // 提高截图质量
+                            logging: false,
+                            allowTaint: true,
+                            useCORS: true,
+                            backgroundColor: document.body.style.backgroundColor || 
+                                (document.body.getAttribute('data-theme') === 'dark' ? '#111111' : '#ffffff'),
+                            onclone: (clonedDoc) => {
+                                // 在克隆的文档中隐藏不需要的元素
+                                const clonedNotification = clonedDoc.getElementById('theme-notification');
+                                if (clonedNotification) clonedNotification.style.display = 'none';
+                                
+                                // 隐藏闪光效果
+                                const clonedFlash = clonedDoc.querySelector('.screenshot-flash');
+                                if (clonedFlash) clonedFlash.style.display = 'none';
+                                
+                                // 隐藏预览模态框
+                                const clonedPreview = clonedDoc.querySelector('.screenshot-preview-modal');
+                                if (clonedPreview) clonedPreview.style.display = 'none';
+                                
+                                // 确保渐变文本在截图中正确显示
+                                const domainName = clonedDoc.querySelector('.domain-name');
+                                if (domainName) {
+                                    // 为了截图，临时使用纯色而非渐变
+                                    const firstPart = domainName.querySelector('.part.first');
+                                    if (firstPart) {
+                                        firstPart.style.background = 'none';
+                                        firstPart.style.webkitBackgroundClip = 'unset';
+                                        firstPart.style.backgroundClip = 'unset';
+                                        firstPart.style.webkitTextFillColor = '#006eff';
+                                        firstPart.style.color = '#006eff';
+                                        firstPart.style.textShadow = '0 2px 10px rgba(0, 111, 255, 0.3)';
+                                    }
+                                    
+                                    const numberPart = domainName.querySelector('.part.number');
+                                    if (numberPart) {
+                                        numberPart.style.background = 'none';
+                                        numberPart.style.webkitBackgroundClip = 'unset';
+                                        numberPart.style.backgroundClip = 'unset';
+                                        numberPart.style.webkitTextFillColor = '#4a9fff';
+                                        numberPart.style.color = '#4a9fff';
+                                        numberPart.style.textShadow = '0 2px 10px rgba(74, 159, 255, 0.3)';
+                                    }
+                                    
+                                    const digits = domainName.querySelectorAll('.digit');
+                                    digits.forEach(digit => {
+                                        digit.style.background = 'none';
+                                        digit.style.webkitBackgroundClip = 'unset';
+                                        digit.style.backgroundClip = 'unset';
+                                        digit.style.webkitTextFillColor = '#4a9fff';
+                                        digit.style.color = '#4a9fff';
+                                        digit.style.textShadow = '0 2px 10px rgba(74, 159, 255, 0.3)';
+                                    });
+                                }
+                                
+                                // 优化扩展名显示
+                                const extensions = clonedDoc.querySelectorAll('.extension');
+                                extensions.forEach(ext => {
+                                    if (ext.classList.contains('active')) {
+                                        ext.style.color = '#ffffff';
+                                        ext.style.backgroundColor = '#006eff';
+                                        ext.style.boxShadow = '0 4px 12px rgba(0, 111, 255, 0.3)';
+                                    }
+                                });
+                            }
+                        }).then(canvas => {
+                            // 恢复导航栏和通知
+                            nav.style.display = navDisplay;
+                            notification.style.display = 'block';
+                            
+                            // 恢复之前显示的模态框
+                            modals.forEach(modal => {
+                                if (modal.dataset.wasVisible === 'true') {
+                                    modal.style.display = 'block';
+                                    delete modal.dataset.wasVisible;
+                                }
+                            });
+                            
+                            // 创建下载链接
+                            const link = document.createElement('a');
+                            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').substring(0, 19);
+                            link.download = `li1023-${document.body.getAttribute('data-theme') || 'light'}-${timestamp}.png`;
+                            
+                            // 使用更高质量的PNG
+                            link.href = canvas.toDataURL('image/png', 1.0);
+                            
+                            // 显示预览
+                            showScreenshotPreview(link.href, link.download);
+                            
+                            // 更新通知
+                            notificationText.textContent = '截图已完成';
+                            setTimeout(() => {
+                                notification.style.display = 'none';
+                                // 移除闪光效果元素
+                                if (document.body.contains(flashEffect)) {
+                                    document.body.removeChild(flashEffect);
+                                }
+                            }, 1500);
+                        }).catch(err => {
+                            // 恢复导航栏和通知
+                            nav.style.display = navDisplay;
+                            notification.style.display = 'block';
+                            
+                            // 恢复之前显示的模态框
+                            modals.forEach(modal => {
+                                if (modal.dataset.wasVisible === 'true') {
+                                    modal.style.display = 'block';
+                                    delete modal.dataset.wasVisible;
+                                }
+                            });
+                            
+                            console.error('截图生成失败:', err);
+                            notificationText.textContent = '截图生成失败';
+                            setTimeout(() => {
+                                notification.style.display = 'none';
+                                if (document.body.contains(flashEffect)) {
+                                    document.body.removeChild(flashEffect);
+                                }
+                            }, 1500);
+                        });
+                    }, 200);
+                }, 50);
+            }
+        }, 1000);
+    });
+
+    // 显示截图预览
+    function showScreenshotPreview(imageUrl, filename) {
+        // 创建预览模态框
+        const previewModal = document.createElement('div');
+        previewModal.className = 'screenshot-preview-modal';
+        
+        // 创建预览内容
+        previewModal.innerHTML = `
+            <div class="screenshot-preview-content">
+                <div class="screenshot-preview-header">
+                    <h3>截图预览</h3>
+                    <button class="close-preview">&times;</button>
+                </div>
+                <div class="screenshot-preview-body">
+                    <img src="${imageUrl}" alt="网站截图" class="screenshot-preview-image">
+                </div>
+                <div class="screenshot-preview-footer">
+                    <button class="download-screenshot">保存截图</button>
+                    <button class="share-screenshot">分享</button>
+                    <button class="cancel-screenshot">取消</button>
+                </div>
+            </div>
+        `;
+        
+        // 添加到文档
+        document.body.appendChild(previewModal);
+        
+        // 显示预览
+        setTimeout(() => {
+            previewModal.classList.add('active');
+        }, 10);
+        
+        // 关闭预览
+        previewModal.querySelector('.close-preview').addEventListener('click', () => {
+            previewModal.classList.remove('active');
+            setTimeout(() => {
+                document.body.removeChild(previewModal);
+            }, 300);
+        });
+        
+        // 取消按钮
+        previewModal.querySelector('.cancel-screenshot').addEventListener('click', () => {
+            previewModal.classList.remove('active');
+            setTimeout(() => {
+                document.body.removeChild(previewModal);
+            }, 300);
+        });
+        
+        // 下载按钮
+        previewModal.querySelector('.download-screenshot').addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.href = imageUrl;
+            link.download = filename;
+            link.click();
+        });
+        
+        // 分享按钮
+        previewModal.querySelector('.share-screenshot').addEventListener('click', () => {
+            if (navigator.share) {
+                // 转换base64为Blob
+                fetch(imageUrl)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const file = new File([blob], filename, { type: 'image/png' });
+                        navigator.share({
+                            title: 'li1023 网站截图',
+                            text: '查看我的li1023网站截图',
+                            files: [file]
+                        }).catch(err => {
+                            console.error('分享失败:', err);
+                            // 如果分享API失败，回退到复制链接
+                            copyImageToClipboard(imageUrl);
+                        });
+                    });
+            } else {
+                // 回退到复制到剪贴板
+                copyImageToClipboard(imageUrl);
+            }
+        });
+    }
+
+    // 复制图片到剪贴板
+    function copyImageToClipboard(imageUrl) {
+        // 创建一个通知
+        const notification = document.getElementById('theme-notification');
+        const notificationText = document.getElementById('theme-notification-text');
+        
+        // 尝试复制图片到剪贴板
+        fetch(imageUrl)
+            .then(res => res.blob())
+            .then(blob => {
+                try {
+                    const item = new ClipboardItem({ 'image/png': blob });
+                    navigator.clipboard.write([item]).then(() => {
+                        notificationText.textContent = '图片已复制到剪贴板';
+                        notification.style.display = 'block';
+                        setTimeout(() => {
+                            notification.style.display = 'none';
+                        }, 2000);
+                    });
+                } catch (err) {
+                    console.error('复制到剪贴板失败:', err);
+                    notificationText.textContent = '复制失败，请手动保存图片';
+                    notification.style.display = 'block';
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 2000);
+                }
+            });
+    }
 }); 
